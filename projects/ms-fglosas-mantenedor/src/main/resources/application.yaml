@@ -1,0 +1,93 @@
+######
+# Configuracion Base de Spring
+######
+
+spring:
+  application:
+    name: @project.artifactId@
+  threads:
+    virtual:
+      enabled: true
+  cloud:
+    openfeign:
+      micrometer:
+        enabled: true
+
+server:
+  port: 9091
+  compression:
+    enabled: true
+
+startup:
+  beans:
+    inspect: true
+
+######
+# Configuracion documentacion Swagger
+######
+swagger:
+  info:
+    name: @project.artifactId@
+    description: @project.description@
+    version: @project.version@
+    contact:
+      name: Lider Técnico
+      mail: lidertecnico@bancochile.cl
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    try-it-out-enabled: false
+
+######
+# Configuracion endpoints Actuator
+######
+management:
+  health:
+    kubernetes:
+      enabled: true
+  tracing:
+    sampling:
+      probability: 1.0
+  endpoint:
+    health:
+      enabled: true
+      show-details: NEVER # Para debugging o local puede usarse ALWAYS
+    prometheus:
+      enabled: true
+    metrics:
+      enabled: true
+  endpoints:
+    enabled-by-default: false
+    web:
+      base-path: /
+      exposure:
+        include:
+          - health
+          - prometheus
+
+######
+# Configuracion Logging
+######
+logging:
+  pattern:
+    level: '%5p [${spring.application.name:}]'
+  level:
+    root: DEBUG
+    org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl: INFO
+    org.apache.tomcat.util.compat: INFO
+    io:
+      micrometer:
+        dynatrace: OFF
+        registry:
+          otlp: OFF
+    ohttp3:
+      internal:
+        concurrent: OFF
+
+validations:
+  rut:
+    pattern:
+      regexp: "^(\\d{1,9}-[\\dkK])$"

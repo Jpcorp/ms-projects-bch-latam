@@ -1,0 +1,13 @@
+######
+# Otras configuraciones
+######
+properties:
+  helloService:
+    statusMessageOk: OK
+    greetingMessage: Greetings from Spring Boot!
+  randomService:
+    statusMessageOk: OK
+    statusMessageNok: NOK
+    minRandomValue: 10
+    okMessage: "Random number between %s and %s: %s"
+    errorMessage: "Value must be equal or greater than %s"

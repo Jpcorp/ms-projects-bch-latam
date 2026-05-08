@@ -1,0 +1,17 @@
+######
+# Configuracion Kubernetes Config
+######
+
+spring:
+  config:
+    import: "kubernetes:"
+  cloud:
+    kubernetes:
+      config:
+        enabled: true
+        sources:
+          - name: ms-fglosas-mantenedor
+          - name: fglosas-bbdd
+          - name: fglosas-rest
+          
+

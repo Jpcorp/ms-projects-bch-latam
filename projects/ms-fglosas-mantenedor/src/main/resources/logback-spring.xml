@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+	
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSSXXX,America/Santiago} %clr(${LOG_LEVEL_PATTERN:-%5p}) [%t] [traceId: %X{traceId}] %-40.40logger{39} : %m%n</pattern>
+        </encoder>
+        <prudent>true</prudent>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS_APP_BANCO}/@project.artifactId@-@project.version@-${HOSTNAME}_%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="minimal" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>%m%n</pattern>
+        </encoder>
+        <prudent>true</prudent>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS_APP_BANCO}/@project.artifactId@_std_@project.version@-${HOSTNAME}_%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>90</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>[tipo=aplicativo] %d{yyyy-MM-dd HH:mm:ss.SSSXXX,America/Santiago} %clr(${LOG_LEVEL_PATTERN:-%5p}) [%t] [!dt dt.trace_id=%X{traceId:-},dt.span_id=%X{spanId:-}] %-40.40logger{39} : %m%n</pattern>
+		</encoder>
+	</appender>
+
+    <appender name="CONSOLE-STD" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[tipo=standard][!dt dt.trace_id=%X{traceId:-},dt.span_id=%X{spanId:-}] %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org.springframework.ws.client.MessageTracing.sent" level="TRACE" />
+    <logger name="org.springframework.ws.client.MessageTracing.received" level="TRACE" />
+    <logger name="org.springframework.ws.server.MessageTracing" level="TRACE" />
+    <logger name="std.logger" level="ALL" additivity="false">
+        <appender-ref ref="minimal" />
+        <appender-ref ref="CONSOLE-STD" />
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+    </root>
+
+    <jmxConfigurator />
+
+</configuration>

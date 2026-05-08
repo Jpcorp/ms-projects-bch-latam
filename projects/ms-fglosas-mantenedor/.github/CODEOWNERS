@@ -1,0 +1,5 @@
+# Teams aprobadores para las ramas protegidas
+* @bch-tradicionales/DSO_TOOLS_PRD_SDSP_DPOM_LT
+
+# Teams aprobadores para cambios al archivo CODEOWNERS
+**/.github/** @bch-tradicionales/DSO_TOOLS_PRD_DIVOT_DEVSECOPS @bch-tradicionales/DSO_TOOLS_PRD_DIVOT_DEVSECOPS_ADMIN @bch-tradicionales/DSO_TOOLS_PRD_SERVICES
